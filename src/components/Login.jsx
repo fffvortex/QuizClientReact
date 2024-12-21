@@ -6,7 +6,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect} from "react";
 import Center from "./Center";
 import useForm from "../hooks/useForm";
 import { createAPIEndpoint, ENDPOINTS } from "../api";
@@ -20,11 +20,16 @@ const getFreshModelObject = () => ({
 
 export default function Login() {
 
-  const {context, setContext} = useStateContext()
+  const {context, setContext, resetContext} = useStateContext()
   const navigate = useNavigate()
 
   const { values, setValues, errors, setErrors, handleInputChange } =
     useForm(getFreshModelObject);
+
+  useEffect(() => {
+    resetContext()
+  }, [])
+  
 
   const login = (e) => {
     e.preventDefault();
@@ -52,8 +57,7 @@ export default function Login() {
 
   return (
     <Center>
-      {context.participantId}
-      <Card sx={{ width: "40rem" }}>
+      <Card>
         <CardContent sx={{ textAlign: "center" }}>
           <Typography variant="h4" sx={{ my: 3 }}>
             Quiz
